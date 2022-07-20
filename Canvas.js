@@ -7,7 +7,12 @@ export default class Canvas {
     constructor(width = 800, height = 200) {
         this.width = width;
         this.height = height;
+
         this.animationId = 0;
+        this.animationCb = () => {};
+
+        this.state = {};
+
         this.createCanvas();
     }
 
@@ -28,15 +33,10 @@ export default class Canvas {
 
     /**
      * start the animation loop
-     * @param {Function} _animate - function to be called on each animation frame
+     * @param {Function} animationCb - function to be called on each animation frame
      */
-    draw(_animate) {
-        const animate = () => {
-            _animate(this);
-            this.animationId = window.requestAnimationFrame(animate);
-        };
-
-        animate();
+    draw(animationCb) {
+        this.animationCb = animationCb;
     }
 
     /**
@@ -49,6 +49,13 @@ export default class Canvas {
         if (!existingCanvas) {
             app.appendChild(this.canvas);
         }
+
+        const animate = () => {
+            this.animationCb(this);
+            this.animationId = window.requestAnimationFrame(animate);
+        };
+
+        animate();
     }
 
     /**

@@ -3,11 +3,17 @@ body {
     place-items: center;
 }
 
+#app {
+    animation-delay: 200ms;
+    animation: fade-in 250ms ease-in-out;
+}
+
 #app select {
     display: block;
     border-radius: 0;
     outline: none;
     user-select: none;
+    background-color: #fff;
     border: 1px solid #000;
     border-bottom: none;
     padding: 4px;
@@ -15,4 +21,13 @@ body {
 
 #app canvas {
     border: 1px solid #000;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
