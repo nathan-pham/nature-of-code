@@ -1,4 +1,4 @@
-import Canvas from "/Canvas.js";
+import Canvas from "/lib/Canvas.js";
 
 export const canvas = new Canvas();
 
