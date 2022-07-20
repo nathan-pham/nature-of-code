@@ -7,7 +7,7 @@ const buildOptions = (chaptersDir = "./chapters", buildDir = "./js") => {
 
     for (const chapter of chapters) {
         const demos = fs.readdirSync(path.join(chaptersDir, chapter));
-        options[chapter] = demos;
+        options[chapter] = demos.filter((demo) => demo.endsWith(".js"));
     }
 
     fs.writeFileSync(
