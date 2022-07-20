@@ -1,7 +1,3 @@
-export const mount = () => {
-    console.log("ok b");
-};
+import Canvas from "/Canvas.js";
 
-export const unmount = () => {
-    console.log("unmounted b");
-};
+export const canvas = new Canvas();

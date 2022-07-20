@@ -34,23 +34,25 @@ const renderOptions = (prefix, options) => {
  */
 const selectOption = async (demoPath) => {
     // cleanup previous demo
-    previousModule.unmount();
+    previousModule.canvas.unmount();
 
     // load new demo
     const module = await import(demoPath);
     Object.assign(previousModule, module);
-    previousModule.mount();
+    previousModule.canvas.mount();
 };
 
 // store previous module (to run cleanup function)
 const previousModule = {
-    mount: () => {},
-    unmount: () => {},
+    canvas: {
+        mount: () => {},
+        unmount: () => {},
+    },
 };
 
 // append select to body
 const select = renderOptions("/chapters", options);
-document.body.appendChild(select);
+document.getElementById("app").appendChild(select);
 
 // listen for changes to load new demo
 select.addEventListener("change", (e) => selectOption(e.target.value));

@@ -1,0 +1,18 @@
+body {
+    display: grid;
+    place-items: center;
+}
+
+#app select {
+    display: block;
+    border-radius: 0;
+    outline: none;
+    user-select: none;
+    border: 1px solid #000;
+    border-bottom: none;
+    padding: 4px;
+}
+
+#app canvas {
+    border: 1px solid #000;
+}
