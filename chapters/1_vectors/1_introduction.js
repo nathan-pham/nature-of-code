@@ -10,7 +10,7 @@ canvas.setup(() => {
     ball = new Vector(0, canvas.height / 2 - radius / 2);
 });
 
-canvas.draw(({ mouse, utils }) => {
+canvas.draw(({ utils }) => {
     // update ball position
     ball.x += 1;
 
