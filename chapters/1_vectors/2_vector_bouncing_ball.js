@@ -1,7 +1,7 @@
 export const mount = () => {
-    console.log("ok");
+    console.log("ok b");
 };
 
 export const unmount = () => {
-    console.log("unmounted");
+    console.log("unmounted b");
 };
