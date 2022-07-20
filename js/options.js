@@ -2,6 +2,6 @@
 export const options = {
     "1_vectors": [
         "1_introduction.js",
-        "2_bouncing_ball.js"
+        "2_random_walker.js"
     ]
 };
