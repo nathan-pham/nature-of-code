@@ -1,5 +1,8 @@
 import { options } from "./options.js";
 
+// simple utility to get hash location
+const hash = () => location.hash.substring(1);
+
 /**
  *
  * @param {string} prefix - prepended to all demos (where demos are stored, like in ./chapters)
@@ -18,14 +21,27 @@ const renderOptions = (prefix, options) => {
 
         // add demos to option section
         for (const demo of demos) {
+            const value = `${prefix}/${chapter}/${demo}`;
             const option = document.createElement("option");
-            option.value = `${prefix}/${chapter}/${demo}`;
+            option.value = value;
             option.textContent = demo;
             optgroup.appendChild(option);
+
+            if (hash() === value) {
+                select.value = value;
+            }
         }
     });
 
     return select;
+};
+
+// store previous module (to run cleanup function)
+const previousModule = {
+    canvas: {
+        mount: () => {},
+        unmount: () => {},
+    },
 };
 
 /**
@@ -42,18 +58,17 @@ const selectOption = async (demoPath) => {
     previousModule.canvas.mount();
 };
 
-// store previous module (to run cleanup function)
-const previousModule = {
-    canvas: {
-        mount: () => {},
-        unmount: () => {},
-    },
-};
-
 // append select to body
 const select = renderOptions("/chapters", options);
-document.getElementById("app").appendChild(select);
+document.getElementById("app_options").appendChild(select);
 
 // listen for changes to load new demo
-select.addEventListener("change", (e) => selectOption(e.target.value));
-selectOption(select.value);
+select.addEventListener("change", (e) => (location.hash = e.target.value));
+window.addEventListener("hashchange", () => selectOption(hash()));
+
+// set default demo or load from hash
+if (location.hash) {
+    selectOption(hash());
+} else {
+    location.hash = select.value;
+}

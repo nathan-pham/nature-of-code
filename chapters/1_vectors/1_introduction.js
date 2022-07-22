@@ -7,7 +7,7 @@ let ball;
 let radius = 10;
 
 canvas.setup(() => {
-    ball = new Vector(0, canvas.height / 2 - radius / 2);
+    ball = new Vector(0, canvas.height / 2);
 });
 
 canvas.draw(({ utils }) => {

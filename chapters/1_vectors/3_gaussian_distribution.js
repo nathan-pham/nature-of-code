@@ -1,0 +1,16 @@
+import CustomMath from "/lib/CustomMath.js";
+import Canvas from "/lib/Canvas.js";
+import Vector from "/lib/Vector.js";
+
+export const canvas = new Canvas();
+
+canvas.draw(({ utils }) => {
+    const std = 800;
+    const mean = canvas.width / 2;
+    const xloc = CustomMath.randomNormal() * std + mean;
+
+    utils
+        .fill("rgba(0, 0, 0, 0.01)")
+        .circle(xloc, canvas.height / 2, 16)
+        .fill();
+});

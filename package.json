@@ -1,0 +1,13 @@
+{
+    "name": "nature-of-code",
+    "version": "1.0.0",
+    "description": "Code implementations of the \"Nature of Code\" by Daniel Shiffman except with Vanilla JavaScript. Use `node buildOptions.js` to read the files in `chapters` and update the frontend.",
+    "main": "buildOptions.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "node buildOptions.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

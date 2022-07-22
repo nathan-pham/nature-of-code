@@ -2,6 +2,8 @@
 export const options = {
     "1_vectors": [
         "1_introduction.js",
-        "2_random_walker.js"
+        "2_random_walker.js",
+        "3_gaussian_distribution.js",
+        "4_custom_distribution.js"
     ]
 };

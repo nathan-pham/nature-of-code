@@ -1,6 +1,11 @@
 const fs = require("fs");
 const path = require("path");
 
+/**
+ * generate options.js file so it can be referenced on the frontend
+ * @param {string} chaptersDir - where to read chapters from
+ * @param {string} buildDir - where to put output file
+ */
 const buildOptions = (chaptersDir = "./chapters", buildDir = "./js") => {
     const chapters = fs.readdirSync(chaptersDir);
     const options = {};
