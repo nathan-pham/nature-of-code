@@ -8,7 +8,13 @@ body {
     animation: fade-in 250ms ease-in-out;
 }
 
-#app select {
+#app__options {
+    display: flex;
+    justify-content: space-between;
+}
+
+#app__options select,
+#app__options button {
     display: block;
     border-radius: 0;
     outline: none;
@@ -17,6 +23,11 @@ body {
     border: 1px solid #000;
     border-bottom: none;
     padding: 4px;
+}
+
+#app__options button {
+    padding: 4px 8px;
+    cursor: pointer;
 }
 
 #app canvas {

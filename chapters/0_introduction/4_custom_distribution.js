@@ -3,9 +3,11 @@ import Canvas from "/lib/Canvas.js";
 export const canvas = new Canvas();
 
 const bucketSize = 100;
-const bucket = new Array(bucketSize).fill(0);
+let bucket;
 
-canvas.setup(() => {});
+canvas.setup(() => {
+    bucket = new Array(bucketSize).fill(0);
+});
 
 canvas.draw(({ utils }) => {
     utils.clear();

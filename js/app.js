@@ -36,6 +36,16 @@ const renderOptions = (prefix, options) => {
     return select;
 };
 
+/**
+ * Create a play button
+ * @returns {HTMLButtonElement}
+ */
+const renderButton = () => {
+    const button = document.createElement("button");
+    button.textContent = "play";
+    return button;
+};
+
 // store previous module (to run cleanup function)
 const previousModule = {
     canvas: {
@@ -59,8 +69,12 @@ const selectOption = async (demoPath) => {
 };
 
 // append select to body
+const appOptions = document.getElementById("app__options");
 const select = renderOptions("/chapters", options);
-document.getElementById("app_options").appendChild(select);
+const button = renderButton();
+
+appOptions.appendChild(select);
+appOptions.appendChild(button);
 
 // listen for changes to load new demo
 select.addEventListener("change", (e) => (location.hash = e.target.value));
@@ -72,3 +86,9 @@ if (location.hash) {
 } else {
     location.hash = select.value;
 }
+
+// reload demo if play pressed
+button.addEventListener("click", () => {
+    previousModule.canvas.unmount();
+    previousModule.canvas.mount();
+});
