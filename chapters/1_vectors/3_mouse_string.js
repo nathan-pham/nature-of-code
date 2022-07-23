@@ -12,7 +12,10 @@ canvas.setup(() => {
 
 canvas.draw(({ mouse, utils }) => {
     const vMouse = new Vector(mouse.x, mouse.y);
-    vMouse.sub(vCenter);
+    vMouse.sub(ball.pos);
+
+    // center + deltaB = mouse
+    // mouse - center = deltaB (vec towards mouse)
 
     // make updates
     ball.acc.add(vMouse.copy().mult(0.001)); // move towards mouse
@@ -30,7 +33,7 @@ canvas.draw(({ mouse, utils }) => {
 
 class Ball {
     constructor() {
-        this.pos = vCenter;
+        this.pos = vCenter.copy();
         this.vel = new Vector();
         this.acc = new Vector();
     }

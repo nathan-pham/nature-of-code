@@ -9,7 +9,10 @@ export const options = {
     ],
     "1_vectors": [
         "1_bouncing_ball.js",
-        "2_mouse.js",
-        "3_mouse_acceleration.js"
+        "2_mouse_acceleration.js",
+        "3_mouse_string.js"
+    ],
+    "2_forces": [
+        "1_mover.js"
     ]
 };
