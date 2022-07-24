@@ -44,8 +44,8 @@ class Mover extends BaseMover {
     constructor(i) {
         super();
 
-        this.mass = CustomMath.random(2, 5);
-        this.radius = this.mass * 2;
+        this.mass = CustomMath.random(0.5, 4);
+        this.radius = this.mass * 4;
         this.pos = new Vector(
             canvas.width / 2,
             CustomMath.lerp(0, canvas.height / 2, i / moversSize)
@@ -68,7 +68,7 @@ class Mover extends BaseMover {
 
 class Attracter {
     pos = new Vector(canvas.width / 2, canvas.height / 2);
-    radius = 20;
+    radius = 15;
     mass = 50;
 
     draw(utils) {

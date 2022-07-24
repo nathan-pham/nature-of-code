@@ -18,5 +18,8 @@ export const options = {
         "3_mover_friction.js",
         "4_fluid_drag.js",
         "5_gravitational_attraction.js"
+    ],
+    "3_oscillation": [
+        "1_rotation.js"
     ]
 };

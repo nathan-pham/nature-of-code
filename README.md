@@ -1,11 +1,27 @@
-# Nature of Code
+# The Nature of Code
 
-Code implementations of the "Nature of Code" by Daniel Shiffman except with Vanilla JavaScript. Use `node buildOptions.js` to read the files in `chapters` and update the frontend.
+JavaScript code examples from the Nature of Code by Daniel Shiffman
 
 ## Chapters
 
-1. Vectors
+0. Introduction
     1. Introduction
+    2. Random Walker
+    3. Gaussian Distribution
+    4. Custom Distribution
+    5. Perlin Noise
+1. Vectors
+    1. Bouncing Ball
+    2. Mouse Acceleration
+    3. Mouse String
+2. Forces
+    1. Mover
+    2. Mover Mass
+    3. Mover Friction
+    4. Fluid Drag
+    5. Gravitational Attraction
+3. Oscillation
+    1. Rotation
 
 ## Vanilla Canvas
 
