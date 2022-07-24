@@ -22,6 +22,9 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     5. Gravitational Attraction
 3. Oscillation
     1. Rotation
+    2. Polar Coordinates
+    3. Simple Harmonic Motion
+    4. Oscillators
 
 ## Vanilla Canvas
 
