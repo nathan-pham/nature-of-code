@@ -1,39 +1,58 @@
+import CustomMath from "/lib/CustomMath.js";
 import Canvas from "/lib/Canvas.js";
 import Vector from "/lib/Vector.js";
 
 export const canvas = new Canvas();
 
-let mover;
+const gravity = new Vector(0, 0.2);
+const wind = new Vector(0.3, 0);
+const mu = 0.1;
+
+let movers;
 
 canvas.setup(() => {
-    mover = new Mover();
+    movers = new Array(5).fill(0).map(() => new Mover());
 });
 
 canvas.draw(({ mouse, utils }) => {
-    mover.applyForce(new Vector(0, 0.3)); // apply gravity
-    if (mouse.down) {
-        mover.applyForce(new Vector(0.2, 0)); // apply wind
+    // update loop
+    for (const mover of movers) {
+        mover.acc.add(gravity); // directly apply gravity - mass has no effect here
+        if (mouse.down) {
+            mover.applyForce(wind); // apply wind
+        }
+
+        mover.update().boundaries();
     }
 
-    mover.update().boundaries();
-
     utils.clear();
+
     utils
         .fill("#000")
-        .custom("fillText", "Press your mouse to apply wind!", 10, 22)
-        .draw(mover);
+        .custom("fillText", "Press your mouse to apply wind!", 10, 22);
+
+    // render loop
+    for (const mover of movers) {
+        utils.draw(mover);
+    }
 });
 
 class Mover {
     pos = new Vector(canvas.width / 2, canvas.height / 2);
     vel = new Vector();
     acc = new Vector();
+    mass = 3;
     radius = 10;
 
-    constructor() {}
+    constructor() {
+        this.mass = CustomMath.random(1, 10);
+        this.radius = this.mass * 3;
+
+        this.pos.x = CustomMath.random(this.radius, canvas.width - this.radius);
+    }
 
     applyForce(force) {
-        this.acc.add(force);
+        this.acc.add(force.copy().div(this.mass));
         return this;
     }
 

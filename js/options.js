@@ -13,6 +13,9 @@ export const options = {
         "3_mouse_string.js"
     ],
     "2_forces": [
-        "1_mover.js"
+        "1_mover.js",
+        "2_mover_mass.js",
+        "3_mover_friction.js",
+        "4_fluid_drag.js"
     ]
 };
