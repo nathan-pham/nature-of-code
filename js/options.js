@@ -23,6 +23,8 @@ export const options = {
         "1_rotation.js",
         "2_polar_coordinates.js",
         "3_simple_harmonic_motion.js",
-        "4_oscillators.js"
+        "4_oscillators.js",
+        "5_sin_wave.js",
+        "6_gravitational_pullers.js"
     ]
 };

@@ -25,6 +25,8 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     2. Polar Coordinates
     3. Simple Harmonic Motion
     4. Oscillators
+    5. Sin Wave
+    6. Gravitational Pullers
 
 ## Vanilla Canvas
 
