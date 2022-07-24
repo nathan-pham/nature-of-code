@@ -2,6 +2,8 @@ import CustomMath from "/lib/CustomMath.js";
 import Canvas from "/lib/Canvas.js";
 import Vector from "/lib/Vector.js";
 
+import { Mover as BaseMover } from "./1_mover.js";
+
 export const canvas = new Canvas();
 
 // F_drag = -0.5 * p * ||v||^2 * A * C_d * v_unit
@@ -12,54 +14,79 @@ export const canvas = new Canvas();
 // could be simplified to
 // F_drag = -C_d * ||v||^2 * v_unit
 
-const generateDrag = (vel) =>
-    vel
-        .copy()
-        .normalize()
-        .mult(-1 * C_d * Math.pow(vel.mag(), 2));
-
 const gravity = new Vector(0, 0.2);
-const C_d = 0.4;
 
-const moversSize = 5;
+const moversSize = 6;
 const fluidHeight = canvas.height / 2;
+const fluidDragConstant = 0.4;
 
+let liquid;
 let movers;
 
 canvas.setup(() => {
+    liquid = new Liquid(fluidHeight, fluidDragConstant);
     movers = new Array(moversSize).fill(0).map((_, i) => new Mover(i));
 });
 
-canvas.draw(({ mouse, utils }) => {
+canvas.draw(({ utils }) => {
     // update movers
     for (const mover of movers) {
-        mover.applyGravity().applyDrag().update().boundaries();
+        mover
+            .applyGravity()
+            .applyDrag(liquid.drag(mover))
+            .update()
+            .boundaries();
     }
 
-    // draw fluid
-    utils
-        .clear()
-        .fill("#333233")
-        .rect(0, fluidHeight, canvas.width, canvas.height - fluidHeight)
-        .fill();
-
-    // draw movers
-    for (const mover of movers) {
-        utils.draw(mover);
-    }
+    // draw liquid and movers
+    utils.clear().draw(liquid).drawArray(movers);
 });
 
-class Mover {
-    pos = new Vector(canvas.width / 2, 40);
-    vel = new Vector();
-    acc = new Vector();
-    mass = 3;
-    radius = 10;
+class Liquid {
+    constructor(fluidHeight, fluidDragConstant) {
+        this.height = fluidHeight;
+        this.C_d = fluidDragConstant;
+    }
 
+    contains(mover) {
+        if (mover.pos.y - mover.radius > this.height) {
+            return true;
+        }
+
+        return false;
+    }
+
+    drag(mover) {
+        // return drag force if mover is in the liquid
+        if (this.contains(mover)) {
+            return mover.vel
+                .copy()
+                .normalize()
+                .mult(-1 * this.C_d * Math.pow(mover.vel.mag(), 2));
+        }
+
+        return new Vector(0, 0);
+    }
+
+    draw(utils) {
+        utils
+            .fill("#333233")
+            .rect(0, this.height, canvas.width, canvas.height - this.height)
+            .fill();
+
+        return this;
+    }
+}
+
+class Mover extends BaseMover {
     constructor(i) {
-        this.mass = CustomMath.random(1, 10);
+        super();
+
+        this.mass = CustomMath.random(3, 10);
         this.radius = this.mass * 3;
+
         this.pos.x = CustomMath.lerp(0, canvas.width, (i + 0.5) / moversSize);
+        this.pos.y = 40;
     }
 
     applyForce(force) {
@@ -72,51 +99,7 @@ class Mover {
         return this;
     }
 
-    applyDrag() {
-        if (this.pos.y - this.radius > fluidHeight) {
-            this.applyForce(generateDrag(this.vel));
-        }
-
-        return this;
-    }
-
-    update() {
-        this.vel.add(this.acc);
-        this.pos.add(this.vel);
-        this.acc.mult(0);
-        return this;
-    }
-
-    boundaries() {
-        if (this.pos.x < this.radius) {
-            this.pos.x = this.radius;
-            this.vel.x *= -1;
-        }
-
-        if (this.pos.x > canvas.width - this.radius) {
-            this.pos.x = canvas.width - this.radius;
-            this.vel.x *= -1;
-        }
-
-        if (this.pos.y < this.radius) {
-            this.pos.y = this.radius;
-            this.vel.y *= -1;
-        }
-
-        if (this.pos.y > canvas.height - this.radius) {
-            this.pos.y = canvas.height - this.radius;
-            this.vel.y *= -1;
-        }
-
-        return this;
-    }
-
-    draw(utils) {
-        utils
-            .fill("#7f7f7f")
-            .stroke("#000")
-            .circle(this.pos.x, this.pos.y, this.radius)
-            .fill()
-            .stroke();
+    applyDrag(drag) {
+        return this.applyForce(drag);
     }
 }

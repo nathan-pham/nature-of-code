@@ -24,13 +24,12 @@ canvas.draw(({ mouse, utils }) => {
         .draw(mover);
 });
 
-class Mover {
+export class Mover {
     pos = new Vector(canvas.width / 2, canvas.height / 2);
     vel = new Vector();
     acc = new Vector();
     radius = 10;
-
-    constructor() {}
+    mass = 3;
 
     applyForce(force) {
         this.acc.add(force);

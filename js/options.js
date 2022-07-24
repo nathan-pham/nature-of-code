@@ -16,6 +16,7 @@ export const options = {
         "1_mover.js",
         "2_mover_mass.js",
         "3_mover_friction.js",
-        "4_fluid_drag.js"
+        "4_fluid_drag.js",
+        "5_gravitational_attraction.js"
     ]
 };
