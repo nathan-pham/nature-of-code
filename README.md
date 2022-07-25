@@ -28,6 +28,8 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     5. Sin Wave
     6. Gravitational Pullers
     7. Pendulum
+    8. Springs
+    9. Trampoline
 
 ## Vanilla Canvas
 

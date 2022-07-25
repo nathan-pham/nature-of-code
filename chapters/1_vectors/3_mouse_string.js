@@ -19,7 +19,7 @@ canvas.draw(({ mouse, utils }) => {
 
     // make updates
     ball.acc.add(vMouse.copy().mult(0.001)); // move towards mouse
-    ball.acc.add(new Vector(0, 0.1)); // apply  gravity
+    ball.acc.add(new Vector(0, 0.1)); // apply gravity
     ball.update();
 
     utils.clear();
