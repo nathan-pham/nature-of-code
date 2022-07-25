@@ -25,6 +25,7 @@ export const options = {
         "3_simple_harmonic_motion.js",
         "4_oscillators.js",
         "5_sin_wave.js",
-        "6_gravitational_pullers.js"
+        "6_gravitational_pullers.js",
+        "7_pendulum.js"
     ]
 };

@@ -1,7 +1,6 @@
 import CustomMath from "/lib/CustomMath.js";
 import Canvas from "/lib/Canvas.js";
 import Vector from "/lib/Vector.js";
-import Noise from "/lib/Noise.js";
 
 import { Mover as BaseMover } from "../2_forces/1_mover.js";
 
@@ -10,7 +9,7 @@ export const canvas = new Canvas();
 // Force of gravity = (G * m1 * m2) * r_unit / d^2
 // r_unit = direction of force = location 2 - location 1
 
-const G = 0.7;
+const G = 0.6;
 const moversSize = 3;
 
 let attracter;
@@ -44,16 +43,20 @@ class Mover extends BaseMover {
     constructor(i) {
         super();
 
-        this.mass = 2;
-        this.radius = 20;
+        this.mass = 3;
+        this.radius = 10;
         this.pos = new Vector(
-            CustomMath.random(this.radius, canvas.width - this.radius),
+            CustomMath.random(
+                this.radius + 75,
+                canvas.width - this.radius - 75
+            ),
             CustomMath.random(this.radius, canvas.height - this.radius)
         );
     }
 
     draw(utils) {
-        const lineWidth = Math.sin(this.vel.mag() * 2) * 10;
+        const lineWidth =
+            Math.sin(canvas.frameCount / 20 + this.vel.mag() * 2) * 10;
         const x = this.radius * 2 + lineWidth;
 
         utils
@@ -73,7 +76,7 @@ class Mover extends BaseMover {
             .stroke("#000")
             .line(0, 0, x, 0)
             .stroke()
-            .circle(x, 0, 5)
+            .circle(x, 0, 3)
             .fill()
             .custom("restore");
     }

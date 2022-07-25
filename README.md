@@ -27,6 +27,7 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     4. Oscillators
     5. Sin Wave
     6. Gravitational Pullers
+    7. Pendulum
 
 ## Vanilla Canvas
 
