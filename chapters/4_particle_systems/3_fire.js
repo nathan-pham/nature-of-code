@@ -91,6 +91,7 @@ class Particle {
     }
 
     draw(utils) {
+        // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/createRadialGradient
         const gradient = utils.ctx.createRadialGradient(
             this.pos.x,
             this.pos.y,
@@ -111,6 +112,8 @@ class Particle {
                 "globalAlpha",
                 CustomMath.map(this.lifespan, 0, this.initialLifespan, 0, 1)
             )
+            // https://stackoverflow.com/questions/42740839/html5-canvas-blendmode
+            // blending
             .customSet("globalCompositeOperation", "lighter")
             .fill(gradient)
             .circle(this.pos.x, this.pos.y, this.radius)
