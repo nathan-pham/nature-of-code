@@ -32,6 +32,7 @@ export const options = {
     ],
     "4_particle_systems": [
         "1_particles.js",
-        "2_particles_wind.js"
+        "2_particles_wind.js",
+        "3_fire.js"
     ]
 };

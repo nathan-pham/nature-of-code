@@ -21,7 +21,7 @@ canvas.draw(({ utils }) => {
         .fill("#000")
         .custom(
             "fillText",
-            "Press you mouse to apply wind! The circle repels particles.",
+            "Press you mouse to apply wind! The big boi circle repels particles.",
             10,
             22
         )

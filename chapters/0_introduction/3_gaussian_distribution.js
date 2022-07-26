@@ -6,7 +6,7 @@ export const canvas = new Canvas();
 canvas.draw(({ utils }) => {
     const scale = 800;
     const mean = canvas.width / 2;
-    const xloc = CustomMath.randomNormal() * scale + mean;
+    const xloc = (CustomMath.randomNormal() - 0.5) * scale + mean;
 
     utils
         .fill("rgba(0, 0, 0, 0.01)")

@@ -33,6 +33,7 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
 4. Particle Systems
     1. Particles
     2. Particles Wind
+    3. Fire
 
 ## Vanilla Canvas
 
