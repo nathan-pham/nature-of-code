@@ -32,6 +32,7 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     9. Trampoline
 4. Particle Systems
     1. Particles
+    2. Particles Wind
 
 ## Vanilla Canvas
 

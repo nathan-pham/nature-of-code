@@ -3,20 +3,17 @@ import Canvas from "/lib/Canvas.js";
 import Vector from "/lib/Vector.js";
 
 export const canvas = new Canvas();
-let particleSystems;
+let particleSystem;
+let repeller;
 
-canvas.setup(({ mouse }) => {
-    particleSystems = [];
-
-    mouse.onPress(() => {
-        particleSystems.push(new ParticleSystem(mouse.pos.copy()));
-    });
+canvas.setup(() => {
+    particleSystem = new ParticleSystem(new Vector(canvas.width / 2, 50));
+    repeller = new Repeller(new Vector(canvas.width / 2, canvas.height / 2));
 });
 
 canvas.draw(({ utils }) => {
-    for (const system of particleSystems) {
-        system.update();
-    }
+    particleSystem.update();
+    repeller.repel(particleSystem);
 
     utils
         .clear()
@@ -24,14 +21,43 @@ canvas.draw(({ utils }) => {
         .fill("#000")
         .custom(
             "fillText",
-            "Press you mouse to create a new particle system!",
+            "Press you mouse to apply wind! The circle repels particles.",
             10,
             22
         )
 
-        // draw particle systems
-        .drawArray(particleSystems);
+        // draw particle system
+        .draw(repeller)
+        .draw(particleSystem);
 });
+
+class Repeller {
+    radius = 10;
+
+    constructor(pos, k = 30) {
+        this.pos = pos.copy();
+        this.k = k;
+    }
+
+    repel(particleSystem) {
+        for (const particle of particleSystem.particles) {
+            const force = particle.pos.copy().sub(this.pos);
+            const distance = CustomMath.constrain(force.mag(), 4, 40);
+            force.setMag(this.k);
+
+            particle.applyForce(force.div(Math.pow(distance, 2)));
+        }
+    }
+
+    draw(utils) {
+        utils
+            .fill("#7f7f7f")
+            .stroke()
+            .circle(this.pos.x, this.pos.y, this.radius)
+            .fill()
+            .stroke();
+    }
+}
 
 class ParticleSystem {
     particles = [];
@@ -42,12 +68,19 @@ class ParticleSystem {
     }
 
     update() {
+        // create new particle
         this.particles.push(
             Math.random() > 0.5
                 ? new Particle(this.origin)
                 : new SquareParticle(this.origin)
         );
 
+        // apply wind if mouse is down
+        if (canvas.mouse.down) {
+            this.applyForce(new Vector(0.3, 0));
+        }
+
+        // update particles
         for (let i = this.particles.length - 1; i >= 0; i--) {
             const particle = this.particles[i];
 
@@ -58,6 +91,14 @@ class ParticleSystem {
         }
     }
 
+    applyForce(force) {
+        for (const particle of this.particles) {
+            particle.acc.add(force.copy());
+        }
+
+        return this;
+    }
+
     draw(utils) {
         utils.drawArray(this.particles);
     }
@@ -66,11 +107,12 @@ class ParticleSystem {
 class Particle {
     pos = new Vector();
     vel = new Vector();
-    acc = Vector.randomUnit().setMag(2);
+    acc = Vector.randomUnit().setMag(1);
     radius = 5;
+    mass = 1;
     dead = false;
 
-    constructor(origin, lifespan = 75) {
+    constructor(origin, lifespan = 90) {
         this.pos = origin.copy();
 
         this.lifespan = lifespan;
@@ -79,6 +121,11 @@ class Particle {
 
     applyGravity() {
         this.acc.add(new Vector(0, 0.1));
+        return this;
+    }
+
+    applyForce(force) {
+        this.acc.add(force.copy().div(this.mass));
         return this;
     }
 

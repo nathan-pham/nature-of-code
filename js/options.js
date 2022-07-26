@@ -31,6 +31,7 @@ export const options = {
         "9_trampoline.js"
     ],
     "4_particle_systems": [
-        "1_particles.js"
+        "1_particles.js",
+        "2_particles_wind.js"
     ]
 };
