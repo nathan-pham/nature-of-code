@@ -29,5 +29,8 @@ export const options = {
         "7_pendulum.js",
         "8_springs.js",
         "9_trampoline.js"
+    ],
+    "4_particle_systems": [
+        "1_particles.js"
     ]
 };

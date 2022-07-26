@@ -30,6 +30,8 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     7. Pendulum
     8. Springs
     9. Trampoline
+4. Particle Systems
+    1. Particles
 
 ## Vanilla Canvas
 
@@ -40,3 +42,7 @@ Yet another wrapper around the HTML5 canvas, similar to p5.js but less abstracti
 -   `lib/CustomMath.js` - Custom math utils (like `random` and `map`)
 -   `lib/Vector.js` - Vector class for managing simple vector math
 -   `lib/Mouse.js` - Internal mouse class, already included with `Canvas`
+
+## Build Options
+
+`npm run build` or `node buildOptions.js` will re-compile a list of options found in `chapters` and update this README to reflect those changes.
