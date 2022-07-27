@@ -59,13 +59,15 @@ const previousModule = {
  * @param {string} demoPath - path to dynamically load a js module from
  */
 const selectOption = async (demoPath) => {
+    location.hash = demoPath;
+
     // cleanup previous demo
     previousModule.canvas.unmount();
 
     // load new demo
     const module = await import(demoPath);
     Object.assign(previousModule, module);
-    previousModule.canvas.mount();
+    module.canvas.mount();
 };
 
 // append select to body
@@ -77,7 +79,7 @@ appOptions.appendChild(select);
 appOptions.appendChild(button);
 
 // listen for changes to load new demo
-select.addEventListener("change", (e) => (location.hash = e.target.value));
+select.addEventListener("change", (e) => selectOption(e.target.value));
 window.addEventListener("hashchange", () => selectOption(hash()));
 
 // set default demo or load from hash

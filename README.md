@@ -34,6 +34,15 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     1. Particles
     2. Particles Wind
     3. Fire
+5. Physics Engines
+    1. Getting Started
+    2. Random Polygons
+    3. Random Car
+n. Coding Challenges
+n. Creative Coding
+    1. Iterative Squares
+    2. Face Generator
+    3. Circle Clock
 
 ## Vanilla Canvas
 
