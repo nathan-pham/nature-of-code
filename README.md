@@ -38,11 +38,15 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     1. Getting Started
     2. Random Polygons
     3. Random Car
+    4. Introduction
 n. Coding Challenges
 n. Creative Coding
     1. Iterative Squares
     2. Face Generator
     3. Circle Clock
+    3. Circle Clock Matter
+n. Random
+    1. Fractal Tree
 
 ## Vanilla Canvas
 

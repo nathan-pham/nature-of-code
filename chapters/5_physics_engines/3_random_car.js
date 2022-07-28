@@ -1,16 +1,10 @@
-import CustomMath from "/lib/CustomMath.js";
 import Canvas from "/lib/Canvas.js";
 import Vector from "/lib/Vector.js";
-import Noise from "/lib/Noise.js";
 
 export const canvas = new Canvas();
 const origin = new Vector(canvas.width / 2, canvas.height / 2);
 
 let polygon;
-// averageRadius,
-// irregularity,
-// spikiness,
-// verticeCount
 
 canvas.setup(() => {
     const width = 200;

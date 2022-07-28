@@ -1,7 +1,7 @@
 import Canvas from "/lib/Canvas.js";
 
-import Matter from "https://cdn.skypack.dev/matter-js@0.18.0";
-const { Engine, Runner, Bodies, Composite } = Matter;
+import Matter from "https://esm.sh/matter-js@0.18.0";
+const { Engine, Render, Runner, Bodies, Composite } = Matter;
 
 export const canvas = new Canvas();
 
@@ -27,10 +27,6 @@ canvas.setup(() => {
 
     runner = Runner.create();
     Runner.run(runner, engine);
-
-    return () => {
-        Runner.stop(runner);
-    };
 });
 
 canvas.draw(({}) => {

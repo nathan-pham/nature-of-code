@@ -38,12 +38,17 @@ export const options = {
     "5_physics_engines": [
         "1_getting_started.js",
         "2_random_polygons.js",
-        "3_random_car.js"
+        "3_random_car.js",
+        "4_introduction.js"
     ],
     "n_coding_challenges": [],
     "n_creative_coding": [
         "1_iterative_squares.js",
         "2_face_generator.js",
-        "3_circle_clock.js"
+        "3_circle_clock.js",
+        "3_circle_clock_matter.js"
+    ],
+    "n_random": [
+        "1_fractal_tree.js"
     ]
 };
