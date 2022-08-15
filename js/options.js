@@ -7,6 +7,16 @@ export const options = {
         "4_custom_distribution.js",
         "5_perlin_noise.js"
     ],
+    "11_creative_coding": [
+        "1_iterative_squares.js",
+        "2_face_generator.js",
+        "3_circle_clock.js",
+        "3_circle_clock_matter.js"
+    ],
+    "12_random": [
+        "1_fractal_tree.js",
+        "2_grid_dynamic_sketches.js"
+    ],
     "1_vectors": [
         "1_bouncing_ball.js",
         "2_mouse_acceleration.js",
@@ -40,15 +50,5 @@ export const options = {
         "2_random_polygons.js",
         "3_random_car.js",
         "4_introduction.js"
-    ],
-    "n_coding_challenges": [],
-    "n_creative_coding": [
-        "1_iterative_squares.js",
-        "2_face_generator.js",
-        "3_circle_clock.js",
-        "3_circle_clock_matter.js"
-    ],
-    "n_random": [
-        "1_fractal_tree.js"
     ]
 };

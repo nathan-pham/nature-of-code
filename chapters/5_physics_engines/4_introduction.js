@@ -1,19 +1,17 @@
+import CustomMath from "/lib/CustomMath.js";
 import Canvas from "/lib/Canvas.js";
 
 import Matter from "https://esm.sh/matter-js@0.18.0";
-const { Engine, Render, Runner, Bodies, Composite } = Matter;
+const { Engine, Runner, Bodies, Composite } = Matter;
 
 export const canvas = new Canvas();
 
 let engine, runner;
 
-canvas.setup(() => {
+canvas.setup(({ mouse }) => {
     // initialize world
     engine = Engine.create();
 
-    // create two boxes and a ground
-    const boxA = Bodies.rectangle(400, 200, 20, 20);
-    const boxB = Bodies.rectangle(450, 50, 20, 20);
     const ground = Bodies.rectangle(
         canvas.width / 2,
         canvas.height,
@@ -27,30 +25,42 @@ canvas.setup(() => {
 
     runner = Runner.create();
     Runner.run(runner, engine);
+
+    // add event listeners
+    mouse.onPress(() => {
+        Composite.add(engine.world, [
+            Bodies.rectangle(
+                mouse.x,
+                mouse.y,
+                CustomMath.random(5, 25),
+                CustomMath.random(5, 25)
+            ),
+        ]);
+    });
 });
 
-canvas.draw(({}) => {
-    var bodies = Composite.allBodies(engine.world);
-    const context = canvas.ctx;
+canvas.draw(({ utils, ctx }) => {
+    const bodies = Composite.allBodies(engine.world);
 
-    context.fillStyle = "#fff";
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    utils
+        .background("white")
+        .fill("black")
+        .custom("fillText", "Press to place a new box.", 10, 22);
 
-    context.beginPath();
+    ctx.beginPath();
 
-    for (var i = 0; i < bodies.length; i += 1) {
-        var vertices = bodies[i].vertices;
+    for (let i = 0; i < bodies.length; i += 1) {
+        const vertices = bodies[i].vertices;
 
-        context.moveTo(vertices[0].x, vertices[0].y);
-
-        for (var j = 1; j < vertices.length; j += 1) {
-            context.lineTo(vertices[j].x, vertices[j].y);
+        // draw body
+        ctx.moveTo(vertices[0].x, vertices[0].y);
+        for (let j = 1; j < vertices.length; j += 1) {
+            ctx.lineTo(vertices[j].x, vertices[j].y);
         }
-
-        context.lineTo(vertices[0].x, vertices[0].y);
+        ctx.lineTo(vertices[0].x, vertices[0].y);
     }
 
-    context.lineWidth = 1;
-    context.strokeStyle = "#999";
-    context.stroke();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "#999";
+    ctx.stroke();
 });

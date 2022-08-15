@@ -10,6 +10,14 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     3. Gaussian Distribution
     4. Custom Distribution
     5. Perlin Noise
+11. Creative Coding
+    1. Iterative Squares
+    2. Face Generator
+    3. Circle Clock
+    3. Circle Clock Matter
+12. Random
+    1. Fractal Tree
+    2. Grid Dynamic Sketches
 1. Vectors
     1. Bouncing Ball
     2. Mouse Acceleration
@@ -39,14 +47,6 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     2. Random Polygons
     3. Random Car
     4. Introduction
-n. Coding Challenges
-n. Creative Coding
-    1. Iterative Squares
-    2. Face Generator
-    3. Circle Clock
-    3. Circle Clock Matter
-n. Random
-    1. Fractal Tree
 
 ## Vanilla Canvas
 

@@ -39,13 +39,19 @@ const buildReadme = (options) => {
     const startIdx = readmeContents.indexOf("## Chapters");
     const endIdx = readmeContents.indexOf("## Vanilla Canvas");
 
+    // uppercase every word in a string
     const toUppercase = (title) => {
         return title
             .split(" ")
-            .map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`)
+            .map((word) =>
+                word.length < 3
+                    ? word
+                    : `${word.charAt(0).toUpperCase()}${word.slice(1)}`
+            )
             .join(" ");
     };
 
+    // format into [number]. sketch title
     const formatHeader = (header) => {
         let [number, ...title] = header.split("_");
         title = toUppercase(title.join(" ")).replace(".js", "");
