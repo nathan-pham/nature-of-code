@@ -21,7 +21,7 @@ canvas.setup(({ mouse }) => {
             isStatic: true,
         }
     );
-    Composite.add(engine.world, [boxA, boxB, ground]);
+    Composite.add(engine.world, [ground]);
 
     runner = Runner.create();
     Runner.run(runner, engine);

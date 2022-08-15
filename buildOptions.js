@@ -2,12 +2,21 @@ const fs = require("fs");
 const path = require("path");
 
 /**
+ * get the integer number that prefixes each chapter
+ * @param {string} title - chapter or file name
+ */
+const extractNumber = (title) => parseInt(title.split("_").shift());
+
+/**
  * generate options.js file so it can be referenced on the frontend
  * @param {string} chaptersDir - where to read chapters from
  * @param {string} buildDir - where to put output file
  */
 const buildOptions = (chaptersDir = "./chapters", buildDir = "./js") => {
-    const chapters = fs.readdirSync(chaptersDir);
+    const chapters = fs
+        .readdirSync(chaptersDir)
+        .sort((a, b) => extractNumber(a) - extractNumber(b));
+
     const options = {};
 
     for (const chapter of chapters) {
