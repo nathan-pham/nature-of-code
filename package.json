@@ -8,6 +8,6 @@
         "build": "node buildOptions.js"
     },
     "keywords": [],
-    "author": "",
+    "author": "Nathan Pham",
     "license": "ISC"
 }

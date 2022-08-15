@@ -39,7 +39,9 @@ export const options = {
         "1_getting_started.js",
         "2_random_polygons.js",
         "3_random_car.js",
-        "4_introduction.js"
+        "4_introduction.js",
+        "5_circles.js",
+        "6_constraints.js"
     ],
     "11_creative_coding": [
         "1_iterative_squares.js",
