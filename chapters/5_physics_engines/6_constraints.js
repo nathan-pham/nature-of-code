@@ -7,18 +7,11 @@ const { Engine, Runner, Bodies, Composite } = Matter;
 export const canvas = new Canvas(600, 600);
 const radius = 10;
 
-let engine, runner;
+let engine, runner, mouseConstraint;
 
 canvas.setup(() => {
     // initialize world
     engine = Engine.create();
-
-    // add ground
-    Composite.add(engine.world, [
-        Bodies.rectangle(canvas.width / 2, canvas.height, canvas.width, 20, {
-            isStatic: true,
-        }),
-    ]);
 
     // create chain
     let x = canvas.width / 2;
@@ -53,11 +46,13 @@ canvas.setup(() => {
     Composite.add(engine.world, chain);
 
     // add mouse
-
-    const mouse = Matter.MouseConstraint.create(engine, {
-        mouse: Matter.Mouse.create(canvas.canvas),
-    });
-    Composite.add(engine.world, mouse);
+    // mouse.body is the body being drawn
+    Composite.add(
+        engine.world,
+        (mouseConstraint = Matter.MouseConstraint.create(engine, {
+            mouse: Matter.Mouse.create(canvas.canvas),
+        }))
+    );
 
     runner = Runner.create();
     Runner.run(runner, engine);
@@ -79,18 +74,13 @@ canvas.draw(({ utils, ctx }) => {
         );
 
     // draw bodies
-    ctx.beginPath();
+    // ideally you would create your own class for this
     for (const body of bodies) {
-        const { vertices } = body;
-
-        ctx.moveTo(vertices[0].x, vertices[0].y);
-        for (let j = 1; j < vertices.length; j += 1) {
-            ctx.lineTo(vertices[j].x, vertices[j].y);
-        }
-        ctx.lineTo(vertices[0].x, vertices[0].y);
+        utils
+            .stroke(mouseConstraint.body === body ? "red" : "#999")
+            .circle(body.position.x, body.position.y, radius)
+            .stroke();
     }
-
-    utils.customSet("lineWidth", 1).stroke("#999").stroke();
 
     // draw constraints
     for (const constraint of constraints) {
