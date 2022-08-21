@@ -43,6 +43,9 @@ export const options = {
         "5_circles.js",
         "6_constraints.js"
     ],
+    "6_autonomous_agents": [
+        "1_seek.js"
+    ],
     "11_creative_coding": [
         "1_iterative_squares.js",
         "2_face_generator.js",

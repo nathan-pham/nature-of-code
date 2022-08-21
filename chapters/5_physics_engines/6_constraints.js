@@ -47,10 +47,12 @@ canvas.setup(() => {
 
     // add mouse
     // mouse.body is the body being drawn
+    const mouse = Matter.Mouse.create(canvas.canvas);
+    mouse.pixelRatio = devicePixelRatio;
     Composite.add(
         engine.world,
         (mouseConstraint = Matter.MouseConstraint.create(engine, {
-            mouse: Matter.Mouse.create(canvas.canvas),
+            mouse,
         }))
     );
 
