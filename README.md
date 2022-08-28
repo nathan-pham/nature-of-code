@@ -45,6 +45,8 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     1. Seek
     2. Arrive
     3. Flow Field
+    4. Angle Between
+    5. Scalar Projection
 11. Creative Coding
     1. Iterative Squares
     2. Face Generator
