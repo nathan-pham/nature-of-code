@@ -43,6 +43,8 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     6. Constraints
 6. Autonomous Agents
     1. Seek
+    2. Arrive
+    3. Flow Field
 11. Creative Coding
     1. Iterative Squares
     2. Face Generator

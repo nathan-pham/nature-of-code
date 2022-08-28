@@ -10,7 +10,6 @@ export const canvas = useP5((p) => {
 
     const draw = () => {
         p.background(255);
-        // target mouse
         vehicle.seek(p.createVector(p.mouseX, p.mouseY));
         vehicle.update();
         vehicle.draw();
@@ -22,15 +21,18 @@ export const canvas = useP5((p) => {
             this.vel = p.createVector(0, 0);
             this.acc = p.createVector(0, 0);
 
-            this.maxSpeed = 2;
+            this.maxSpeed = 5;
             this.maxForce = 0.1;
         }
 
         seek(target) {
-            // actual seeking formula
-            // pretty similar to target - current but with pos and then velocity
             const desired = target.copy().sub(this.pos);
-            desired.setMag(this.maxSpeed);
+            const distance = desired.mag();
+
+            // 200 is like the slowing down radius
+            distance < 200
+                ? desired.setMag(p.map(distance, 0, 200, 0, this.maxSpeed))
+                : desired.setMag(this.maxSpeed);
 
             const steer = desired.copy().sub(this.vel);
             steer.limit(this.maxForce);
@@ -49,7 +51,7 @@ export const canvas = useP5((p) => {
             p.translate(this.pos.x, this.pos.y);
             p.rotate(this.vel.heading() + Math.PI / 2);
 
-            // draw triangle (yoinked from shiffman)
+            // draw triangle
             p.fill(100);
             p.stroke(0);
             p.beginShape();

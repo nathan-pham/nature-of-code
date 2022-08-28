@@ -44,7 +44,9 @@ export const options = {
         "6_constraints.js"
     ],
     "6_autonomous_agents": [
-        "1_seek.js"
+        "1_seek.js",
+        "2_arrive.js",
+        "3_flow_field.js"
     ],
     "11_creative_coding": [
         "1_iterative_squares.js",
