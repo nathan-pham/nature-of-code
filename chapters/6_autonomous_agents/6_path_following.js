@@ -36,16 +36,15 @@ export const canvas = useP5((p) => {
         vehicles.forEach((vehicle) => vehicle.draw());
         p.strokeWeight();
         p.text("Pressing your mouse will add a vehicle.", 15, 20);
-    };
 
-    const mousePressed = () => {
-        vehicles.push(new Vehicle(p.mouseX, p.mouseY));
+        if (p.mouseIsPressed) {
+            vehicles.push(new Vehicle(p.mouseX, p.mouseY));
+        }
     };
-
-    return { setup, draw, mousePressed };
+    return { setup, draw };
 });
 
-function VehicleFactory(p) {
+export function VehicleFactory(p) {
     return class Vehicle {
         pos = p.createVector(0, 0);
         vel = p.createVector(0, 0);
@@ -56,7 +55,7 @@ function VehicleFactory(p) {
 
         constructor(x, y) {
             this.pos = p.createVector(x, y);
-            this.vel = p.createVector(1, 0);
+            this.vel = p.createVector(this.maxSpeed, 0);
         }
 
         get diameter() {
@@ -84,6 +83,7 @@ function VehicleFactory(p) {
         }
 
         follow(path) {
+            // 50 is arbitrary (see ahead by 50 frames)
             const posPredict = this.pos.copy().add(this.vel.copy().setMag(50));
             const normalPoint = Vehicle.getNormalPoint(posPredict, path);
 
@@ -92,7 +92,7 @@ function VehicleFactory(p) {
                 const target = path.end
                     .copy()
                     .sub(path.start)
-                    .setMag(10)
+                    .setMag(20)
                     .add(normalPoint); // target points a little bit ahead of normal
 
                 this.seek(target);
@@ -112,16 +112,16 @@ function VehicleFactory(p) {
         }
 
         draw() {
+            // translate vehicle
             p.push();
             p.translate(this.pos.x, this.pos.y);
             p.rotate(this.vel.heading() + Math.PI / 2);
 
+            // draw vehicle
             p.fill(200);
             p.stroke(0);
             p.strokeWeight(1);
             p.beginShape();
-
-            // draw triangle
             p.vertex(0, -this.diameter);
             p.vertex(-this.radius, this.diameter);
             p.vertex(this.radius, this.diameter);
@@ -131,11 +131,13 @@ function VehicleFactory(p) {
     };
 }
 
-function PathFactory(p) {
+export function PathFactory(p) {
     return class Path {
-        constructor(radius = 20, gradient = 50) {
-            this.start = p.createVector(0, p.height / 2 - gradient);
-            this.end = p.createVector(p.width, p.height / 2 + gradient);
+        constructor(start, end, radius = 20) {
+            const gradient = 50;
+
+            this.start = start || p.createVector(0, p.height / 2 - gradient);
+            this.end = end || p.createVector(p.width, p.height / 2 + gradient);
             this.radius = radius;
         }
 
