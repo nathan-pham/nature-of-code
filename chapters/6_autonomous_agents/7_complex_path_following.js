@@ -20,15 +20,17 @@ export const canvas = useP5((p) => {
     const draw = () => {
         p.background(255);
 
-        // draw
-        path.draw();
-        vehicles.forEach((vehicle) => vehicle.draw());
-        // / update
+        // update
         vehicles.forEach((vehicle) => {
             vehicle.follow(path);
             vehicle.borders(path);
             vehicle.update();
         });
+
+        // draw
+        path.draw();
+        vehicles.forEach((vehicle) => vehicle.draw());
+
         p.strokeWeight();
         p.text(
             "Pressing your mouse will add a vehicle.\nPress space to regenerate the path.",

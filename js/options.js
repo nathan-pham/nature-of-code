@@ -50,7 +50,8 @@ export const options = {
         "4_angle_between.js",
         "5_scalar_projection.js",
         "6_path_following.js",
-        "7_complex_path_following.js"
+        "7_complex_path_following.js",
+        "8_group_alignment.js"
     ],
     "11_creative_coding": [
         "1_iterative_squares.js",

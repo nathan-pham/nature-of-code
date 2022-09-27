@@ -49,6 +49,7 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     5. Scalar Projection
     6. Path Following
     7. Complex Path Following
+    8. Group Alignment
 11. Creative Coding
     1. Iterative Squares
     2. Face Generator
