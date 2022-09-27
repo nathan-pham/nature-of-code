@@ -17,7 +17,7 @@ export const canvas = useP5((p) => {
         // update
         vehicles.forEach((vehicle) => {
             vehicle.borders();
-            vehicle.align(vehicles);
+            vehicle.separate(vehicles);
             vehicle.update();
         });
 
@@ -65,22 +65,36 @@ function VehicleFactory(p) {
             }
         }
 
-        align(vehicles) {
+        separate(vehicles) {
+            const desiredSeparation = 50;
             vehicles = vehicles.filter(
                 (vehicle) =>
-                    !(vehicle === this || vehicle.pos.dist(this.pos) > 50)
+                    !(
+                        vehicle === this ||
+                        vehicle.pos.dist(this.pos) > desiredSeparation
+                    )
             );
 
             if (vehicles.length > 0) {
-                // separation: average all nearby velocities = desired velocity
-                const averageVelocity = vehicles
+                // separation: average of all vectors pointing away from other vehicles = desired velocity
+                // cohesion: basically the opposite (point to average position)
+                const averageDesiredVelocity = vehicles
                     .reduce(
-                        (acc, curr) => acc.copy().add(curr.vel),
+                        (acc, curr) =>
+                            acc.copy().add(
+                                // vector that points from curr to pos (effectively away from other vehicles (curr))
+                                // weighted by distance
+                                this.pos
+                                    .copy()
+                                    .sub(curr.pos)
+                                    .normalize()
+                                    .div(this.pos.dist(curr.pos))
+                            ),
                         p.createVector(0, 0)
                     )
                     .div(vehicles.length);
 
-                this.seek(averageVelocity);
+                this.seek(averageDesiredVelocity);
             }
         }
 

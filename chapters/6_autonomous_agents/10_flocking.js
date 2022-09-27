@@ -18,6 +18,7 @@ export const canvas = useP5((p) => {
         vehicles.forEach((vehicle) => {
             vehicle.borders();
             vehicle.align(vehicles);
+            vehicle.separate(vehicles);
             vehicle.update();
         });
 
@@ -40,6 +41,9 @@ function VehicleFactory(p) {
         maxSpeed = 2;
         maxForce = 0.2;
         radius = 6;
+
+        desiredAlignment = 50;
+        desiredSeparation = 50;
 
         constructor(initialX, initialY) {
             this.pos = p.createVector(initialX, initialY);
@@ -68,7 +72,10 @@ function VehicleFactory(p) {
         align(vehicles) {
             vehicles = vehicles.filter(
                 (vehicle) =>
-                    !(vehicle === this || vehicle.pos.dist(this.pos) > 50)
+                    !(
+                        vehicle === this ||
+                        vehicle.pos.dist(this.pos) > this.desiredAlignment
+                    )
             );
 
             if (vehicles.length > 0) {
@@ -81,6 +88,38 @@ function VehicleFactory(p) {
                     .div(vehicles.length);
 
                 this.seek(averageVelocity);
+            }
+        }
+
+        separate(vehicles) {
+            vehicles = vehicles.filter(
+                (vehicle) =>
+                    !(
+                        vehicle === this ||
+                        vehicle.pos.dist(this.pos) > this.desiredSeparation
+                    )
+            );
+
+            if (vehicles.length > 0) {
+                // separation: average of all vectors pointing away from other vehicles = desired velocity
+                // cohesion: basically the opposite (point to average position)
+                const averageDesiredVelocity = vehicles
+                    .reduce(
+                        (acc, curr) =>
+                            acc.copy().add(
+                                // vector that points from curr to pos (effectively away from other vehicles (curr))
+                                // weighted by distance
+                                this.pos
+                                    .copy()
+                                    .sub(curr.pos)
+                                    .normalize()
+                                    .div(this.pos.dist(curr.pos))
+                            ),
+                        p.createVector(0, 0)
+                    )
+                    .div(vehicles.length);
+
+                this.seek(averageDesiredVelocity);
             }
         }
 

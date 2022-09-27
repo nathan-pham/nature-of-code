@@ -21,9 +21,9 @@ const buildOptions = (chaptersDir = "./chapters", buildDir = "./js") => {
 
     for (const chapter of chapters) {
         const demos = fs.readdirSync(path.join(chaptersDir, chapter));
-        options[chapter] = demos.filter(
-            (demo) => demo.endsWith(".js") && demo.includes("_")
-        ); // only save .js files and files with a prefix like _
+        options[chapter] = demos
+            .sort((a, b) => extractNumber(a) - extractNumber(b))
+            .filter((demo) => demo.endsWith(".js") && demo.includes("_")); // only save .js files and files with a prefix like _
     }
 
     // write options to options.js
