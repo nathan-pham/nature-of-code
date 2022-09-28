@@ -53,7 +53,8 @@ export const options = {
         "7_complex_path_following.js",
         "8_group_alignment.js",
         "9_group_separation.js",
-        "10_seek_separate.js"
+        "10_seek_separate.js",
+        "11_path_separate.js"
     ],
     "11_creative_coding": [
         "1_iterative_squares.js",

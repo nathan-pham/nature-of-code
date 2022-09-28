@@ -52,6 +52,7 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     8. Group Alignment
     9. Group Separation
     10. Seek Separate
+    11. Path Separate
 11. Creative Coding
     1. Iterative Squares
     2. Face Generator
