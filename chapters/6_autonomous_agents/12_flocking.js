@@ -1,16 +1,17 @@
 import useP5 from "/lib/useP5.js";
 import p5 from "p5";
 
-const ALIGNMENT = 40;
-const SEPARATION = 30;
-const COHESION = 30;
+const RADIUS = 40;
+const ALIGNMENT = 1;
+const SEPARATION = 1;
+const COHESION = 1;
 
 export const canvas = useP5((p) => {
     const Vehicle = VehicleFactory(p);
     let vehicles = [];
 
     const setup = () => {
-        p.createCanvas(700, 700);
+        p.createCanvas(innerWidth, innerHeight - 28);
     };
 
     const draw = () => {
@@ -52,16 +53,16 @@ function VehicleFactory(p) {
             return this.radius * 2;
         }
 
-        filterVehicles(vehicles, radius) {
+        filterVehicles(vehicles) {
             return vehicles.filter(
-                (v) => !(v === this || this.pos.dist(v.pos) > radius)
+                (v) => !(v === this || this.pos.dist(v.pos) > RADIUS)
             );
         }
 
         applyForces(vehicles) {
-            const alignmentForce = this.alignment(vehicles).mult(1);
-            const separationForce = this.separation(vehicles).mult(1.75);
-            const cohesionForce = this.cohesion(vehicles).mult(1);
+            const alignmentForce = this.alignment(vehicles).mult(ALIGNMENT);
+            const separationForce = this.separation(vehicles).mult(SEPARATION);
+            const cohesionForce = this.cohesion(vehicles).mult(COHESION);
 
             this.acc.add(alignmentForce);
             this.acc.add(separationForce);
@@ -76,7 +77,7 @@ function VehicleFactory(p) {
         }
 
         alignment(vehicles) {
-            vehicles = this.filterVehicles(vehicles, ALIGNMENT);
+            vehicles = this.filterVehicles(vehicles);
 
             if (vehicles.length > 0) {
                 const targetVel = vehicles
@@ -92,8 +93,8 @@ function VehicleFactory(p) {
             return p.createVector(0, 0);
         }
 
-        separation(vehicles, radius) {
-            vehicles = this.filterVehicles(vehicles, radius || SEPARATION);
+        separation(vehicles) {
+            vehicles = this.filterVehicles(vehicles);
 
             if (vehicles.length > 0) {
                 const targetVel = vehicles
@@ -118,7 +119,21 @@ function VehicleFactory(p) {
         }
 
         cohesion(vehicles) {
-            return this.separation(vehicles, COHESION).mult(-1);
+            vehicles = this.filterVehicles(vehicles);
+
+            if (vehicles.length > 0) {
+                const avgPosition = vehicles
+                    .reduce(
+                        (avgPosition, v) => avgPosition.copy().add(v.pos),
+                        p.createVector(0, 0)
+                    )
+                    .div(vehicles.length);
+
+                const targetVel = avgPosition.copy().sub(this.pos);
+                return this.seek(targetVel);
+            }
+
+            return p.createVector(0, 0);
         }
 
         boundary() {
