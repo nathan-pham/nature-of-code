@@ -57,6 +57,9 @@ export const options = {
         "11_path_separate.js",
         "12_flocking.js"
     ],
+    "7_cellular_automata": [
+        "1_single_grid.js"
+    ],
     "11_creative_coding": [
         "1_iterative_squares.js",
         "2_face_generator.js",

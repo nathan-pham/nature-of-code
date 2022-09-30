@@ -54,6 +54,8 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     10. Seek Separate
     11. Path Separate
     12. Flocking
+7. Cellular Automata
+    1. Single Grid
 11. Creative Coding
     1. Iterative Squares
     2. Face Generator
