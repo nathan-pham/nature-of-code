@@ -9,7 +9,7 @@ import p5 from "p5";
 
 export const canvas = useP5((p) => {
     const Grid = GridFactory(p);
-    const size = 5;
+    const size = 2;
 
     let grid;
 
@@ -39,8 +39,12 @@ function GridFactory(p) {
             console.log(this.ruleset);
         }
 
-        // default rule 222
-        initializeRuleset(values = [0, 1, 1, 1, 1, 0, 1, 1]) {
+        // rule 110: [0, 1, 1, 1, 0, 1, 1, 0]
+        // rule  30: [0, 1, 1, 1, 1, 0, 0, 0]
+
+        // default rule 30
+        // could just convert neighbors into decimal index
+        initializeRuleset(values = [0, 1, 1, 1, 1, 0, 0, 0]) {
             if (values.length !== 8) {
                 throw new Error(
                     "There should only be eight possible configurations for neighbors in elementary automata"
@@ -70,9 +74,15 @@ function GridFactory(p) {
             const newState = [...this.state];
             const state = this.state;
 
-            const get = (i) => state[i].toString();
+            const get = (i) => {
+                if (i < 0) {
+                    i += state.length;
+                }
 
-            for (let i = 1; i < state.length - 1; i++) {
+                return state[i % state.length].toString();
+            };
+
+            for (let i = 0; i < state.length; i++) {
                 const key = get(i - 1) + get(i) + get(i + 1);
                 newState[i] = this.ruleset[key];
             }
