@@ -58,7 +58,8 @@ export const options = {
         "12_flocking.js"
     ],
     "7_cellular_automata": [
-        "1_single_grid.js"
+        "1_single_grid.js",
+        "2_game_of_life.js"
     ],
     "11_creative_coding": [
         "1_iterative_squares.js",

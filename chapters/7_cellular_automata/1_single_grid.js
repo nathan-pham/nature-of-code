@@ -14,7 +14,7 @@ export const canvas = useP5((p) => {
     let grid;
 
     const setup = () => {
-        p.createCanvas(500, 500);
+        p.createCanvas(600, 600);
         grid = new Grid(size);
     };
 
