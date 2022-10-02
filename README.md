@@ -58,6 +58,9 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     1. Single Grid
     2. Game of Life
     3. Hex Game of Life
+8. Fractals
+    1. Recursive Circles
+    2. Sierpinski Triangle
 11. Creative Coding
     1. Iterative Squares
     2. Face Generator

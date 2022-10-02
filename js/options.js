@@ -62,6 +62,10 @@ export const options = {
         "2_game_of_life.js",
         "3_hex_game_of_life.js"
     ],
+    "8_fractals": [
+        "1_recursive_circles.js",
+        "2_sierpinski_triangle.js"
+    ],
     "11_creative_coding": [
         "1_iterative_squares.js",
         "2_face_generator.js",
