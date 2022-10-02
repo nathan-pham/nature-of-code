@@ -59,7 +59,8 @@ export const options = {
     ],
     "7_cellular_automata": [
         "1_single_grid.js",
-        "2_game_of_life.js"
+        "2_game_of_life.js",
+        "3_hex_game_of_life.js"
     ],
     "11_creative_coding": [
         "1_iterative_squares.js",
