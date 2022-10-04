@@ -65,7 +65,8 @@ export const options = {
     "8_fractals": [
         "1_recursive_circles.js",
         "2_sierpinski_triangle.js",
-        "3_cantor_set.js"
+        "3_cantor_set.js",
+        "4_koch_curve.js"
     ],
     "11_creative_coding": [
         "1_iterative_squares.js",

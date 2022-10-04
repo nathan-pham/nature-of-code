@@ -62,6 +62,7 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     1. Recursive Circles
     2. Sierpinski Triangle
     3. Cantor Set
+    4. Koch Curve
 11. Creative Coding
     1. Iterative Squares
     2. Face Generator
