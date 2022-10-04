@@ -67,7 +67,10 @@ const selectOption = async (demoPath) => {
     // load new demo
     const module = await import(demoPath);
     Object.assign(previousModule, module);
-    module.canvas.mount();
+
+    if (!module.canvas.isP5) {
+        module.canvas.mount();
+    }
 };
 
 // append select to body
@@ -93,4 +96,5 @@ if (location.hash) {
 button.addEventListener("click", () => {
     previousModule.canvas.unmount();
     previousModule.canvas.mount();
+    button.blur();
 });

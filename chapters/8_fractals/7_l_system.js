@@ -8,23 +8,27 @@ export const canvas = useP5((p) => {
 
     const setup = () => {
         p.createCanvas(600, 600);
-        const origin = p.createVector(p.width / 2, p.height);
 
-        turtle = new Turtle(origin, 20, p.radians(25));
-        lsystem = new LSystem("---F");
+        // create turtle
+        const origin = p.createVector(p.width / 2, p.height);
+        turtle = new Turtle(origin, p.radians(-15), 20, p.radians(25));
 
         // add rules
+        lsystem = new LSystem("---F");
         lsystem.addRule("F", "FF+[+F-F-F]-[-F+F+F]");
+
+        p.noLoop();
     };
 
     const draw = () => {
         p.background(255);
+        lsystem.nextGeneration();
         turtle.setTodo(lsystem.state).draw();
     };
 
     const keyPressed = () => {
         if (p.key === " ") {
-            lsystem.nextGeneration();
+            p.redraw();
         }
     };
 
@@ -33,8 +37,10 @@ export const canvas = useP5((p) => {
 
 export function TurtleFactory(p) {
     return class Turtle {
-        constructor(pos, length, theta) {
-            this.pos = pos;
+        constructor(initialPos, initialAngle, length, theta) {
+            this.initialPos = initialPos;
+            this.initialAngle = initialAngle;
+
             this.todo = "";
             this.length = length;
             this.theta = theta;
@@ -57,7 +63,8 @@ export function TurtleFactory(p) {
 
         draw() {
             p.push();
-            p.translate(this.pos.x, this.pos.y);
+            p.translate(this.initialPos.x, this.initialPos.y);
+            p.rotate(this.initialAngle);
             // interpret turtle path
             for (let i = 0; i < this.todo.length; i++) {
                 const char = this.todo.charAt(i);
