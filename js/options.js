@@ -67,7 +67,9 @@ export const options = {
         "2_sierpinski_triangle.js",
         "3_cantor_set.js",
         "4_koch_curve.js",
-        "5_fractal_tree.js"
+        "5_fractal_tree.js",
+        "6_simple_l_system.js",
+        "7_l_system.js"
     ],
     "11_creative_coding": [
         "1_iterative_squares.js",

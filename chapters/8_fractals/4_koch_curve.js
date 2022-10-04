@@ -5,6 +5,7 @@ export const canvas = useP5((p) => {
     const KochLine = KochLineFactory(p);
     const pointsCount = 3;
     const radius = 250;
+
     let lines = [];
 
     const setup = () => {
