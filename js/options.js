@@ -72,6 +72,9 @@ export const options = {
         "7_l_system.js",
         "8_pattern_l_system.js"
     ],
+    "9_genetic_algorithms": [
+        "1_evolve_strings.js"
+    ],
     "11_creative_coding": [
         "1_iterative_squares.js",
         "2_face_generator.js",
