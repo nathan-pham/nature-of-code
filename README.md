@@ -66,6 +66,7 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     5. Fractal Tree
     6. Simple l System
     7. l System
+    8. Pattern l System
 11. Creative Coding
     1. Iterative Squares
     2. Face Generator

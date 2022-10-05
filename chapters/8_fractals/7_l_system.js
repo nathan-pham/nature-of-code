@@ -11,7 +11,7 @@ export const canvas = useP5((p) => {
 
         // create turtle
         const origin = p.createVector(p.width / 2, p.height);
-        turtle = new Turtle(origin, p.radians(-15), 20, p.radians(25));
+        turtle = new Turtle(origin, p.radians(-15), 10, p.radians(25));
 
         // add rules
         lsystem = new LSystem("---F");
@@ -24,6 +24,7 @@ export const canvas = useP5((p) => {
         p.background(255);
         lsystem.nextGeneration();
         turtle.setTodo(lsystem.state).draw();
+        p.text("Press space to advance to the next generation", 15, 20);
     };
 
     const keyPressed = () => {

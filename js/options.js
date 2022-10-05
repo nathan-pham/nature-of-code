@@ -69,7 +69,8 @@ export const options = {
         "4_koch_curve.js",
         "5_fractal_tree.js",
         "6_simple_l_system.js",
-        "7_l_system.js"
+        "7_l_system.js",
+        "8_pattern_l_system.js"
     ],
     "11_creative_coding": [
         "1_iterative_squares.js",
