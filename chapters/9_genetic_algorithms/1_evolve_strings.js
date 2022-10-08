@@ -7,9 +7,8 @@ export const canvas = useP5((p) => {
 
     let ga;
     const setup = () => {
-        p.createCanvas(600, 700);
-        // p.noLoop();
-        ga = new GeneticAlgorithm(target, 0.01, 1000);
+        p.createCanvas(700, 700);
+        ga = new GeneticAlgorithm(target, 0.1, 1000);
     };
 
     const draw = () => {
@@ -41,6 +40,9 @@ function GeneticAlgorithmFactory(p) {
             this.populationCount = populationCount;
             this.population = [];
             this.generation = 0;
+
+            this.bestFitness = 0;
+            this.bestIndividual = "";
 
             this.initializePopulation();
         }
@@ -78,17 +80,26 @@ function GeneticAlgorithmFactory(p) {
                 }
             }
 
-            // normalize fitness
-            return fitness / this.target.length;
+            const normalizeFitness = fitness / this.target.length;
+
+            if (normalizeFitness > this.bestFitness) {
+                this.bestFitness = normalizeFitness;
+                this.bestIndividual = individual;
+            }
+
+            if (normalizeFitness === 1) {
+                p.noLoop();
+            }
+
+            return normalizeFitness;
         }
 
         // create a pool with each individual appearing in proportion to its fitness
         calculateFitnessPool() {
             const pool = [];
+            // convert [0, 1] to [0, 100]
             const individualCounts = this.population.map((individual) =>
-                Math.ceil(
-                    this.calculateFitness(individual) * this.populationCount
-                )
+                Math.round(this.calculateFitness(individual) * 100)
             );
 
             for (let i = 0; i < this.populationCount; i++) {
@@ -138,10 +149,22 @@ function GeneticAlgorithmFactory(p) {
 
         // draw the entire population
         draw() {
+            p.push();
             p.textFont("monospace");
             for (let i = 0; i < this.populationCount; i++) {
                 p.text(this.population[i], 0, (i + 1) * 20);
             }
+
+            p.translate(this.target.length * 7, 0);
+            p.text(
+                `best: ${this.bestIndividual}\nfitness: ${(
+                    this.bestFitness * 100
+                ).toFixed(2)}%`,
+                0,
+                20
+            );
+
+            p.pop();
         }
     };
 }
