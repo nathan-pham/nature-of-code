@@ -60,14 +60,15 @@ function useModule(p) {
 
         radius = 5;
         maxSpeed = 2;
-        mutationRate = 0.1;
+        mutationRate = 0.01;
 
         dead = false;
         success = false;
 
         constructor(target, pos = p.createVector(0, 0), existingDna) {
             this.target = target;
-            this.pos = pos;
+            this.pos = pos.copy();
+            this.initialPos = pos.copy();
 
             this.dna =
                 existingDna && Array.isArray(existingDna)
@@ -85,6 +86,14 @@ function useModule(p) {
                 .map(() => p5.Vector.random2D());
 
             return dna;
+        }
+
+        copy() {
+            return new Boid(
+                this.target,
+                this.initialPos.copy(),
+                this.dna.map((v) => v.copy())
+            );
         }
 
         applyForces() {
@@ -127,9 +136,10 @@ function useModule(p) {
 
         mutate() {
             // change a random vector
-            if (p.random() < this.mutationRate) {
-                this.dna[Math.floor(Math.random() * this.dna.length)] =
-                    p5.Vector.random2D();
+            for (let i = 0; i < this.dna.length; i++) {
+                if (p.random() < this.mutationRate) {
+                    this.dna[i] = p5.Vector.random2D();
+                }
             }
 
             return this;
@@ -147,6 +157,8 @@ function useModule(p) {
 
         draw() {
             p.push();
+            p.stroke(0);
+            p.fill(200, 100);
             p.translate(this.pos.x, this.pos.y);
             p.rotate(this.vel.heading() + p.PI / 2);
             p.beginShape();
@@ -177,53 +189,51 @@ function useModule(p) {
         initializeBoids(boidsCount) {
             const boids = new Array(boidsCount)
                 .fill(0)
-                .map(() => new Boid(this.target, this.pos.copy()));
+                .map(() => new Boid(this.target, this.pos));
 
             return boids;
         }
 
+        // return (maxFitness, (boid, fitness))
         calculateFitnessPool() {
-            const fitnessPool = [];
-            const fitnessCounts = this.boids.map((boid) =>
-                boid.calculateFitness()
-            );
+            const fitnessPool = this.boids.map((b) => b.calculateFitness());
+            const maxFitness = Math.max(...fitnessPool);
 
-            console.log(Math.max(...fitnessCounts));
+            return {
+                maxFitness,
+                fitnessPool: this.boids.map((b, i) => ({
+                    boid: b,
+                    fitness: fitnessPool[i],
+                })),
+            };
+        }
 
-            for (let i = 0; i < fitnessCounts.length; i++) {
-                const fitnessCount = fitnessCounts[i];
-                const boid = this.boids[i];
-
-                const count = Math.floor(fitnessCount * 100);
-                for (let j = 0; j < count; j++) {
-                    fitnessPool.push(boid);
-                }
+        randomChild(maxFitness, fitnessPool) {
+            const { boid, fitness } = p.random(fitnessPool);
+            const r = p.random(maxFitness);
+            if (r < fitness) {
+                return boid;
             }
 
-            return fitnessPool;
+            // otherwise reject & pick a new child
+            return this.randomChild(maxFitness, fitnessPool);
         }
 
         nextGeneration() {
             this.generation++;
             this.currentFrame = 0;
 
-            const fitnessPool = this.calculateFitnessPool();
-            const boids = new Array(this.boidsCount).fill(0).map(() => {
-                const child = p.random(fitnessPool);
-                const childCopy = new Boid(
-                    this.target,
-                    this.pos.copy(),
-                    child.dna.map((v) => v.copy())
-                ).mutate();
-
-                return childCopy;
-            });
-
-            this.boids = boids;
+            const { maxFitness, fitnessPool } = this.calculateFitnessPool();
+            this.boids = [];
+            this.boids = new Array(this.boidsCount)
+                .fill(0)
+                .map(() =>
+                    this.randomChild(maxFitness, fitnessPool).copy().mutate()
+                );
         }
 
         update() {
-            const acceleration = this.acceleration ? 10 : 1;
+            const acceleration = this.acceleration ? 15 : 1;
             for (let i = 0; i < acceleration; i++) {
                 this.currentFrame++;
                 if (this.currentFrame >= this.maxFrames) {

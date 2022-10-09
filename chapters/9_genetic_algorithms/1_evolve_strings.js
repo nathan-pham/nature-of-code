@@ -8,7 +8,7 @@ export const canvas = useP5((p) => {
     let ga;
     const setup = () => {
         p.createCanvas(700, 700);
-        ga = new GeneticAlgorithm(target, 0.1, 1000);
+        ga = new GeneticAlgorithm(target, 0.001, 2000);
     };
 
     const draw = () => {
@@ -64,7 +64,7 @@ function GeneticAlgorithmFactory(p) {
 
         static randomCharacter() {
             const chars =
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!? ";
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz., ";
             return chars.charAt(Math.floor(Math.random() * chars.length));
         }
 
@@ -89,17 +89,18 @@ function GeneticAlgorithmFactory(p) {
 
             if (normalizeFitness === 1) {
                 p.noLoop();
+                return 1;
             }
 
-            return normalizeFitness;
+            return Math.pow(normalizeFitness, 2);
         }
 
         // create a pool with each individual appearing in proportion to its fitness
         calculateFitnessPool() {
             const pool = [];
             // convert [0, 1] to [0, 100]
-            const individualCounts = this.population.map((individual) =>
-                Math.round(this.calculateFitness(individual) * 100)
+            const individualCounts = this.population.map(
+                (individual) => this.calculateFitness(individual) * 100
             );
 
             for (let i = 0; i < this.populationCount; i++) {
@@ -116,15 +117,17 @@ function GeneticAlgorithmFactory(p) {
 
         mutate(individual) {
             // mutate a single character
-            if (p.random() < this.mutationChance) {
-                const arrayIndividual = individual.split("");
-                arrayIndividual[Math.floor(Math.random() * individual.length)] =
-                    GeneticAlgorithm.randomCharacter();
+            let newIndividual = "";
 
-                return arrayIndividual.join("");
+            for (let i = 0; i < individual.length; i++) {
+                if (p.random() < this.mutationChance) {
+                    newIndividual += GeneticAlgorithm.randomCharacter();
+                } else {
+                    newIndividual += individual.charAt(i);
+                }
             }
 
-            return individual;
+            return newIndividual;
         }
 
         // combine two individuals at a random point to form a child
