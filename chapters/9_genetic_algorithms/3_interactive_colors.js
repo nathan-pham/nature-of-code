@@ -7,9 +7,9 @@ export const canvas = useP5((p) => {
     let palettes;
 
     const setup = () => {
-        const canvas = p.createCanvas(400, 600);
+        const canvas = p.createCanvas(400, 700);
         canvas.elt.oncontextmenu = (e) => e.preventDefault();
-        palettes = new Palettes(4, 6);
+        palettes = new Palettes(4, 7);
     };
 
     const draw = () => {
