@@ -74,7 +74,8 @@ export const options = {
     ],
     "9_genetic_algorithms": [
         "1_evolve_strings.js",
-        "2_smart_rockets.js"
+        "2_smart_rockets.js",
+        "3_interactive_colors.js"
     ],
     "11_creative_coding": [
         "1_iterative_squares.js",
