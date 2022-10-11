@@ -151,7 +151,6 @@ function useModule(p) {
                 this.vel.add(this.acc);
                 this.vel.setMag(this.maxSpeed);
                 this.pos.add(this.vel);
-                this.acc.mult(0);
             }
         }
 
@@ -160,7 +159,9 @@ function useModule(p) {
             p.stroke(0);
             p.fill(200, 100);
             p.translate(this.pos.x, this.pos.y);
-            p.rotate(this.vel.heading() + p.PI / 2);
+            p.rotate(this.vel.heading() + Math.PI / 2);
+            // p.rectMode(p.CENTER);
+            // p.rect(0, 0, this.diameter, this.radius);
             p.beginShape();
             p.vertex(0, -this.diameter);
             p.vertex(-this.radius, this.diameter);
