@@ -77,6 +77,9 @@ export const options = {
         "2_smart_rockets.js",
         "3_interactive_colors.js"
     ],
+    "10_neural_networks": [
+        "1_perceptron.js"
+    ],
     "11_creative_coding": [
         "1_iterative_squares.js",
         "2_face_generator.js",

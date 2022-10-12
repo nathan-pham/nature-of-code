@@ -71,6 +71,8 @@ JavaScript code examples from the Nature of Code by Daniel Shiffman
     1. Evolve Strings
     2. Smart Rockets
     3. Interactive Colors
+10. Neural Networks
+    1. Perceptron
 11. Creative Coding
     1. Iterative Squares
     2. Face Generator
